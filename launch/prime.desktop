@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Prime
+Comment=Open Prime using Server profile
+Exec=/usr/bin/google-chrome --profile-directory="Profile 2" https://www.amazon.co.uk/gp/video/mystuff/watchlist
+Icon=/home/alistair-thorpe/homelab/launch/icons/prime.jpeg
+Terminal=false
+StartupNotify=true
+Categories=Network;WebBrowser;

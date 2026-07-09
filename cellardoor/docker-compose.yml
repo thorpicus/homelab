@@ -1,0 +1,66 @@
+services:
+  wine-client:
+    image: registry.at.home/wine-client:latest
+    ports:
+      - 8082:80
+    depends_on:
+      - wine-server
+    restart: on-failure:5
+    networks:
+      - cellar-door-network
+      - proxy-tier
+
+  wine-server:
+    image: registry.at.home/wine-server:latest
+    environment:
+      - AI_ENABLED=${AI_ENABLED:-false}
+      - DATABASE_URL=postgresql://wine:cellardoor@wine-database:5432/cellardoordb
+      - REDIS_URL=redis://redis:6379
+      - bun-cache:/root/.bun/install/cache 
+      - TAVILY_API_KEY=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
+      - LLM_URL=http://host.docker.internal:8000/v1
+      - LLM_MODEL=gemma-4-26b-a4b-it-4bit
+      - LLM_EMBEDDING_MODEL=jina-embeddings-v5-text-small-retrieval-mlx
+    depends_on:
+      - wine-database
+      - redis
+    restart: on-failure:5
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - cellar-door-network
+      - proxy-tier
+
+  wine-database:
+    image: registry.at.home/wine-database:latest
+    environment:
+      - POSTGRES_USER=wine
+      - POSTGRES_PASSWORD=cellardoor
+      - POSTGRES_DB=cellardoordb
+      - POSTGRES_INITDB_ARGS=--auth-host=scram-sha-256 --auth-local=trust
+    volumes:
+      - wine-pg-data:/var/lib/postgresql/data
+      - ./packages/database/config/pg_hba.conf:/etc/postgresql/pg_hba.conf:ro
+    ports:
+      - 15432:5432
+    restart: on-failure:5
+    networks:
+      - cellar-door-network
+
+  redis:
+    image: redis:7-alpine
+    restart: on-failure:5
+    networks:
+      - cellar-door-network # FIXED: Connected to network
+
+networks:
+  cellar-door-network:
+    driver: bridge
+    driver_opts:
+      com.docker.network.driver.mtu: "1400"
+  proxy-tier:
+    external: true
+
+volumes:
+  wine-pg-data: # FIXED: Removed host-binding to ensure it is fully native internal storage
+
