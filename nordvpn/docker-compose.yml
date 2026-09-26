@@ -1,0 +1,36 @@
+version: "3"
+services:
+  gluetun:
+    image: qmcgaw/gluetun
+    container_name: gluetun
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    volumes:
+      - ./auth:/gluetun/auth
+    ports:
+      - 8899:8888/tcp
+      - 8898:8000
+    environment:
+      - VPN_SERVICE_PROVIDER=nordvpn
+      - VPN_TYPE=wireguard
+      
+      # 1. Provide your unique WireGuard keypair
+      - WIREGUARD_PRIVATE_KEY=tkbFgLO6pmFkeH+GIxBOsYsMA1wSt2O8gH2StfOGZjI=
+      # (Optional but highly recommended for NordVPN Wireguard)
+      # - WIREGUARD_PRESHARED_KEY=your_preshared_key_if_you_have_one
+      
+      # 2. NordVPN Wireguard often still requires your service credentials to pull server definitions
+      - OPENVPN_USER=czdJ6rgq5fDHCMA7U9dMePjw
+      - OPENVPN_PASSWORD=AMNtPkmgc6kixbbNFxD7ZJ1U
+      
+      # 3. Specify target criteria
+      - SERVER_COUNTRIES=Australia
+      
+      - HTTPPROXY=on
+      - HTTPPROXY_LISTENING_ADDRESS=:8888
+      - FIREWALL_OUTBOUND_SUBNETS=192.168.1.0/24,100.64.0.0/10
+      - UPDATER_PERIOD=24h
+    restart: unless-stopped
+

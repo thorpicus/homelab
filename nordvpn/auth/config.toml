@@ -1,0 +1,9 @@
+[[roles]]
+name = "local-terminal"
+routes = [
+ "PUT /v1/vpn/settings", 
+ "GET /v1/vpn/settings",
+ "PUT /v1/vpn/status",
+ "GET /v1/vpn/status"
+ ]
+auth = "none"
