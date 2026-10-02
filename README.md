@@ -1,6 +1,6 @@
 # Setup server for always on
 
-# Disable Lid Sleep: Open the login configuration file:
+## Disable Lid Sleep: Open the login configuration file:
 
 sudo vi /etc/systemd/logind.conf
 
@@ -13,15 +13,15 @@ HandleLidSwitchDocked=ignore
 sudo systemctl restart systemd-logind
 
 
-#Disable System Inactivity Sleep: Prevent Ubuntu from suspending itself due to a lack of keyboard or mouse input:
+## Disable System Inactivity Sleep: Prevent Ubuntu from suspending itself due to a lack of keyboard or mouse input:
 sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
 
-#Turn off the screen instantly: Use the standard Linux utility vbetool:
+# Turn off the screen instantly: Use the standard Linux utility vbetool:
 
 sudo apt install vbetool -y
 sudo vbetool dpms off
 
-#(Note: Pressing any key on the laptop physical keyboard will turn it back on).Turn off the screen automatically at boot: If you run Ubuntu Server (no desktop GUI), you can configure the terminal console to blank the screen automatically after 1 minute of inactivity. Open the GRUB configuration file:
+# (Note: Pressing any key on the laptop physical keyboard will turn it back on).Turn off the screen automatically at boot: If you run Ubuntu Server (no desktop GUI), you can configure the terminal console to blank the screen automatically after 1 minute of inactivity. Open the GRUB configuration file:
 
 sudo vi /etc/default/grubFind 
 
