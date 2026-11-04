@@ -1,0 +1,14 @@
+adguardhome/confdir
+beszel/beszel_agent_data
+beszel/beszel_data
+homeassistant/config
+immich/nohup.ou
+jellyfin/cache
+jellyfin/config
+mqtt5/config
+mqtt5/data
+musicAssistant/data
+nginx/certificate
+nginx/data
+nginx/certificates
+**/nohup.out

@@ -1,0 +1,11 @@
+include:
+ - ./ollama-ui/docker-compose.yml
+ - ./beszel/docker-compose.yml
+ - ./musicAssistant/docker-compose.yml
+ - ./homeassistant/docker-compose.yml
+ - ./mqtt5/docker-compose.yml
+ - ./docker_registry/docker-compose.yml
+ - ./nginx/docker-compose.yml
+ - ./adguardhome/docker-compose.yml
+ - ./jellyfin/docker-compose.yml
+ - ./immich/docker-compose.yml

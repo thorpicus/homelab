@@ -1,4 +1,4 @@
- #!/bin/bash
+#!/bin/zsh
 
 # Configuration
 CERT_DIR="./certificates"
@@ -11,7 +11,7 @@ echo "=== Starting Tailscale Certificate Renewal Process ==="
 mkdir -p "$CERT_DIR"
 
 # List of subdomains
-declare -a arr=("photos" "music" "monitoring" "registry" "assistant" "wine-server" "wine" "nas" "tv")
+arr=("photos" "music" "monitoring" "registry" "assistant" "wine-server" "wine" "nas" "tv")
 
 # Track if any certificate fails
 ANY_FAILED=0
